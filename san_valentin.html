@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Corazones flotantes de fondo */
+        .heart-bg {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.1;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .container {
+            background: white;
+            padding: 60px 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .emoji {
+            font-size: 120px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(1.1); }
+            20%, 40% { transform: scale(1); }
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 120px;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 20px 40px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #btnSi {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform-origin: center;
+        }
+
+        #btnSi:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        #btnNo {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #666;
+            position: absolute;
+        }
+
+        #btnNo:hover {
+            background: linear-gradient(135deg, #fed6e3 0%, #a8edea 100%);
+        }
+
+        /* Mensaje de éxito */
+        .success-message {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-message h2 {
+            color: #e91e63;
+            font-size: 2.5em;
+            margin: 20px 0;
+        }
+
+        .success-message p {
+            color: #666;
+            font-size: 1.3em;
+            line-height: 1.6;
+        }
+
+        .celebration {
+            font-size: 60px;
+            margin: 20px 0;
+        }
+
+        /* Confeti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            position: absolute;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Contador de intentos */
+        .attempt-counter {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .emoji {
+                font-size: 80px;
+            }
+            
+            .btn {
+                padding: 15px 30px;
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Corazones de fondo -->
+    <div class="heart-bg" style="top: 10%; left: 10%;">💕</div>
+    <div class="heart-bg" style="top: 20%; right: 15%;">❤️</div>
+    <div class="heart-bg" style="bottom: 15%; left: 20%;">💖</div>
+    <div class="heart-bg" style="bottom: 25%; right: 10%;">💗</div>
+    <div class="heart-bg" style="top: 50%; left: 5%;">💝</div>
+    <div class="heart-bg" style="top: 60%; right: 5%;">💓</div>
+
+    <div class="container">
+        <div id="pregunta">
+            <div class="emoji">😍</div>
+            <h1>¿Quieres ser mi San Valentín?</h1>
+            <p class="subtitle">Esta es la pregunta más importante del año...</p>
+            
+            <div class="buttons-container">
+                <button class="btn" id="btnSi" onclick="decirSi()">¡Sí! 💕</button>
+                <button class="btn" id="btnNo" onmouseover="moverBotonNo()" onclick="intentarDecirNo()">No 😔</button>
+            </div>
+            
+            <div class="attempt-counter">
+                <span id="intentos">Intentos de decir "No": 0</span>
+            </div>
+        </div>
+
+        <div class="success-message" id="exito">
+            <div class="celebration">🎉💕🎊</div>
+            <h2>¡Sabía que dirías que sí!</h2>
+            <div class="emoji">🥰</div>
+            <p>¡Este será el mejor San Valentín de nuestras vidas! 💖</p>
+            <div class="celebration">💑✨💝</div>
+        </div>
+    </div>
+
+    <script>
+        let intentos = 0;
+        let tamañoSi = 1;
+        let btnSi = document.getElementById('btnSi');
+        let btnNo = document.getElementById('btnNo');
+        let containerWidth = document.querySelector('.buttons-container').offsetWidth;
+        let containerHeight = document.querySelector('.buttons-container').offsetHeight;
+
+        function moverBotonNo() {
+            intentos++;
+            document.getElementById('intentos').textContent = `Intentos de decir "No": ${intentos}`;
+            
+            // Hacer crecer el botón Sí
+            tamañoSi += 0.15;
+            btnSi.style.transform = `scale(${tamañoSi})`;
+            
+            // Mover el botón No a una posición aleatoria
+            let container = document.querySelector('.buttons-container');
+            let containerRect = container.getBoundingClientRect();
+            
+            // Calcular posiciones aleatorias dentro del contenedor
+            let maxX = containerRect.width - btnNo.offsetWidth - 20;
+            let maxY = containerRect.height - btnNo.offsetHeight - 20;
+            
+            let randomX = Math.random() * maxX;
+            let randomY = Math.random() * maxY;
+            
+            btnNo.style.left = randomX + 'px';
+            btnNo.style.top = randomY + 'px';
+            
+            // Cambiar el texto del botón No según los intentos
+            if (intentos === 5) {
+                btnNo.textContent = "¿En serio? 🤔";
+            } else if (intentos === 10) {
+                btnNo.textContent = "Ya rindete 😅";
+            } else if (intentos === 15) {
+                btnNo.textContent = "Imposible! 😜";
+            } else if (intentos === 20) {
+                btnNo.textContent = "Ni lo intentes 🙃";
+            }
+        }
+
+        function intentarDecirNo() {
+            // Si logran hacer clic (muy difícil), igual mueve el botón
+            moverBotonNo();
+        }
+
+        function decirSi() {
+            // Ocultar la pregunta
+            document.getElementById('pregunta').style.display = 'none';
+            
+            // Mostrar mensaje de éxito
+            document.getElementById('exito').style.display = 'block';
+            
+            // Crear confeti
+            crearConfeti();
+            
+            // Cambiar el fondo a algo más festivo
+            document.body.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+        }
+
+        function crearConfeti() {
+            const colores = ['#f093fb', '#f5576c', '#ff6b6b', '#ffd93d', '#6bcf7f', '#4d96ff'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    let confeti = document.createElement('div');
+                    confeti.className = 'confetti';
+                    confeti.style.left = Math.random() * 100 + '%';
+                    confeti.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
+                    confeti.style.animationDelay = Math.random() * 3 + 's';
+                    confeti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    document.body.appendChild(confeti);
+                    
+                    // Eliminar el confeti después de que caiga
+                    setTimeout(() => confeti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+
+        // Posicionar el botón No inicialmente
+        window.addEventListener('load', () => {
+            btnNo.style.position = 'relative';
+        });
+    </script>
+</body>
+</html>
